@@ -40,4 +40,45 @@ class:Slide() {
   }
 }
 
+class:Shlide() {
+  private string root_path
+  private integer counter
+
+  # initialize
+  # @param <string path>
+  Shlide.__init__() {
+    [string] path
+
+    [[ ! -d "$path" || ! "$(file $path) =~ .*\.tar" ]] && e="Invalid file" throw
+    this root_path = "$path"
+  }
+
+  # print current slide
+  Shlide.print() {
+
+    local old_ps1="$PS1"
+    PS1=''
+    tput clear
+    tput cup 0 0
+    cat "$(this root_path)/$(printf '%03d\n' $(this counter)).md"
+    tput cup $(($(tput lines) -2)) 0
+    PS1="$old_ps1"
+  }
+
+  # increase/decrease slide number
+  # @param <integer num>
+  Shlide.moveSlide() {
+    [integer] num
+    this counter = $(( $(this counter) + $num))
+    @return
+  }
+
+  Shlide.__dir__() {
+    compgen -c | grep '^Shlide[:.]*' | sed 's/Shlide[:.]*//g'
+    @return
+  }
+
+}
+
 Type::Initialize Slide
+Type::InitializeStatic Shlide
