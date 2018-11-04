@@ -48,6 +48,33 @@ class:Shlide() {
     @return
   }
 
+  Shlide.main() {
+    [string] cmd="help"
+    [string] path
+
+    case "$cmd" in
+#      "info" ) Shlide.info;;  # TODO: not implemented yet
+#      "help"|"-h" ) Shlide.help;;
+      "start" )
+        Shlide __init__ "$path"
+
+        while read -rsn1 char; do
+          case "$char" in
+            "q" ) break;;
+            " "|"l" ) Shlide moveSlide 1;Shlide print;;
+            "h" ) Shlide moveSlide -1;Shlide print;;
+          esac
+        done
+        echo "Exit."
+        ;;
+            * ) :;;
+    esac
+
+  }
+
 }
 
 Type::InitializeStatic Shlide
+
+
+Shlide main $@
