@@ -17,7 +17,8 @@ class:Slide() {
   Slide.__init__() {
     [string] slide_path
 
-    this path = $slide_path
+    [[ ! -f "$slide_path" ]] && e="Not found" throw && return
+    this path = "$slide_path"
     @return
   }
 
