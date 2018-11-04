@@ -1,3 +1,6 @@
+日本語: JA_README.mdを参照してください
+
+
 # shlide
 
 *shlide* is a slide based presentation tool for cli.
