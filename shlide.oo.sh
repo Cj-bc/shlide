@@ -24,9 +24,12 @@ class:Slide() {
 
   # print slide
   Slide.print() {
+
+    local path="$(this path)"
+    [ -z "$path" ] && e="path not defined" throw && return
     tput clear
     tput cup 0 0
-    cat $(this path)
+    cat "$path"
     @return
   }
 
