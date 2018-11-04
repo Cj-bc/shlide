@@ -25,13 +25,10 @@ class:Shlide() {
   # print current slide
   Shlide.print() {
 
-    local old_ps1="$PS1"
-    PS1=''
     tput clear
     tput cup 0 0
     cat "$(this root_path)/$(printf '%03d\n' $(this counter)).md"
     tput cup $(($(tput lines) -2)) 0
-    PS1="$old_ps1"
   }
 
   # increase/decrease slide number
