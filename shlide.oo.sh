@@ -12,6 +12,7 @@ import util/class util/log util/exception util/tryCatch
 class:Shlide() {
   private string root_path
   private integer counter
+  private string tty
 
   # initialize
   # @param <string path>
@@ -20,15 +21,18 @@ class:Shlide() {
 
     [[ ! -d "$path" || ! "$(file $path) =~ .*\.tar" ]] && e="Invalid file" throw
     this root_path = "$path"
+
+    this tty = "$(tty)"
   }
 
   # print current slide
   Shlide.print() {
-
-    tput clear
-    tput cup 0 0
-    cat "$(this root_path)/$(printf '%03d\n' $(this counter)).md"
-    tput cup $(($(tput lines) -2)) 0
+    {
+      tput clear
+      tput cup 0 0
+      cat "$(this root_path)/$(printf '%03d\n' $(this counter)).md"
+      tput cup $(($(tput lines) -2)) 0
+    } >$(this tty)
   }
 
   # increase/decrease slide number
